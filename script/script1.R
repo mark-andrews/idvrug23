@@ -189,3 +189,11 @@ ggplot(titanic_df,
 ggplot(titanic_df,
        mapping = aes(x = passengerClass, fill = survived)
 ) + geom_bar(position = 'identity', alpha = 0.75)
+
+
+# Tukey boxplot -----------------------------------------------------------
+
+swiss_df <- swiss %>% rownames_to_column('province') %>%
+  mutate(is_catholic = Catholic > 50)
+
+
