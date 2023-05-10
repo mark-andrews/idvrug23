@@ -156,3 +156,36 @@ ggplot(weight_df,
 ) + geom_histogram(colour = 'white', 
                    binwidth = 2.5, 
                    position = 'fill')
+
+
+
+# Bar plots ---------------------------------------------------------------
+
+# Get Titanic data
+titanic_df <- read_csv("https://raw.githubusercontent.com/mark-andrews/idvrug23/main/data/TitanicSurvival.csv")
+
+# bar plot
+ggplot(titanic_df,
+       mapping = aes(x = passengerClass)
+) + geom_bar()
+
+# stacked bar plot
+ggplot(titanic_df,
+       mapping = aes(x = passengerClass, fill = survived)
+) + geom_bar(position = 'stack')
+
+# filled bar plot
+ggplot(titanic_df,
+       mapping = aes(x = passengerClass, fill = survived)
+) + geom_bar(position = 'fill')
+
+
+# dodged bar plot
+ggplot(titanic_df,
+       mapping = aes(x = passengerClass, fill = survived)
+) + geom_bar(position = 'dodge')
+
+# identity bar plot
+ggplot(titanic_df,
+       mapping = aes(x = passengerClass, fill = survived)
+) + geom_bar(position = 'identity', alpha = 0.75)
