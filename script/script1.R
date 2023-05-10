@@ -89,7 +89,70 @@ ggplot(weight_df,
 
 
 
-# histogram where binwidth is 2cm
+# histogram where binwidth is 2.5cm
 ggplot(weight_df,
        mapping = aes(x = height)
-) + geom_histogram(colour = 'white', binwidth = 2)
+) + geom_histogram(colour = 'white', binwidth = 2.5)
+
+# histogram where we have 50 bins
+ggplot(weight_df,
+       mapping = aes(x = height)
+) + geom_histogram(colour = 'white', bins = 50)
+
+# histogram with binwidth 2.5, and separate histogram
+# for Male and Female
+# Stacked histogram: the default
+ggplot(weight_df,
+       mapping = aes(x = height, fill = gender)
+) + geom_histogram(colour = 'white', binwidth = 2.5)
+
+
+# histogram with binwidth 2.5, and separate histogram
+# for Male and Female
+# Dodged histogram
+ggplot(weight_df,
+       mapping = aes(x = height, fill = gender)
+) + geom_histogram(colour = 'white', 
+                   binwidth = 2.5, 
+                   position = 'dodge')
+
+
+# histogram with binwidth 2.5, and separate histogram
+# for Male and Female
+# Identity histogram
+ggplot(weight_df,
+       mapping = aes(x = height, fill = gender)
+) + geom_histogram(colour = 'white', 
+                   binwidth = 2.5, 
+                   position = 'identity')
+
+# histogram with binwidth 2.5, and separate histogram
+# for Male and Female
+# Identity histogram
+# No fill; different colours
+ggplot(weight_df,
+       mapping = aes(x = height, colour = gender)
+) + geom_histogram(binwidth = 2.5, 
+                   fill = NA,
+                   position = 'identity')
+
+# histogram with binwidth 2.5, and separate histogram
+# for Male and Female
+# Identity histogram
+# with transparent fill colour
+ggplot(weight_df,
+       mapping = aes(x = height, fill = gender)
+) + geom_histogram(colour = 'white', 
+                   binwidth = 2.5, 
+                   position = 'identity',
+                   alpha = 0.75)
+
+
+# histogram with binwidth 2.5, and separate histogram
+# for Male and Female
+# Filled histogram
+ggplot(weight_df,
+       mapping = aes(x = height, fill = gender)
+) + geom_histogram(colour = 'white', 
+                   binwidth = 2.5, 
+                   position = 'fill')
