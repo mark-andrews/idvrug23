@@ -196,4 +196,56 @@ ggplot(titanic_df,
 swiss_df <- swiss %>% rownames_to_column('province') %>%
   mutate(is_catholic = Catholic > 50)
 
+ggplot(swiss_df,
+       mapping = aes(x = Fertility)
+) + geom_boxplot()
 
+# boxplot
+ggplot(swiss_df,
+       mapping = aes(x = '', y = Fertility)
+) + geom_boxplot(width = 0.25)
+
+# box and jitter plot
+ggplot(swiss_df,
+       mapping = aes(x = '', y = Fertility)
+) + geom_boxplot(width = 0.25) + 
+  geom_jitter(width = 0.05, size = 0.5, alpha = 0.5)
+
+# box and jitter plot
+ggplot(swiss_df,
+       mapping = aes(x = '', y = Fertility)
+) + geom_boxplot(width = 0.25, outlier.shape = NA) + 
+  geom_jitter(width = 0.05, size = 0.75, alpha = 0.75)
+
+
+# separate boxplots for is_catholic true and false
+ggplot(swiss_df,
+       mapping = aes(x = is_catholic, y = Fertility)
+) + geom_boxplot(width = 0.25, outlier.shape = NA) + 
+  geom_jitter(width = 0.05, size = 0.75, alpha = 0.75)
+
+# same boxplot with notches 
+ggplot(swiss_df,
+       mapping = aes(x = is_catholic, y = Fertility)
+) + geom_boxplot(width = 0.25, outlier.shape = NA, notch = TRUE) + 
+  geom_jitter(width = 0.05, size = 0.75, alpha = 0.75)
+
+# Boxplots with two grouping variables
+
+
+# for starters, just `supp` on x axis
+ggplot(ToothGrowth,
+       mapping = aes(x = supp, y = len)
+) + geom_boxplot()
+
+# use `dose` as x-axis
+ggplot(ToothGrowth,
+       mapping = aes(x = dose, y = len, group = dose)
+) + geom_boxplot()
+
+# let's use both `supp` and `dose`
+ggplot(ToothGrowth,
+       mapping = aes(x = dose, y = len, 
+                     group = interaction(dose,supp), 
+                     colour = supp)
+) + geom_boxplot()
