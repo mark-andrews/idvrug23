@@ -217,4 +217,91 @@ map_data <- read_csv("https://raw.githubusercontent.com/mark-andrews/idvrug23/ma
 eu_ref <- read_csv("https://raw.githubusercontent.com/mark-andrews/idvrug23/main/data/EU-referendum-result-data.csv")
 
 #  join up the two data sets
-ref_mapdata <- inner_join(map_data, eu_ref, by = c('id' = 'Area_Code'))
+ref_mapdata <- inner_join(map_data, eu_ref, 
+                          by = c('id' = 'Area_Code'))
+
+
+ggplot(ref_mapdata,
+       mapping = aes(x = long, 
+                     y = lat, 
+                     group = group, 
+                     fill = Pct_Leave)
+) + geom_polygon(colour = 'white', size = 0.1) + 
+  coord_equal() +
+  theme_minimal() +
+  scale_fill_distiller(type = 'div', 
+                       palette = 5, 
+                       limits = c(20, 80))
+
+
+
+# Fine tuning -------------------------------------------------------------
+
+p1 <- ggplot(weight_df,
+       mapping = aes(x = height, y = weight, colour = gender)
+) + geom_point()
+
+p1 + theme_classic()
+p1 + theme_minimal()
+p1 + theme_bw()
+p1 + theme_dark()
+p1 + theme_light()
+p1 + theme_gray()
+
+library(ggthemes)
+
+p1 + theme_wsj()
+p1 + theme_economist()
+p1 + theme_economist_white()
+p1 + theme_stata()
+p1 + theme_excel()
+p1 + theme_excel_new()
+p1 + theme_tufte()
+p1 + theme_calc()
+
+# set the default theme to be classic
+theme_set(theme_classic())
+
+# Change labels
+p1 + labs(x = 'Height (cm)',
+          y = 'Weight (kg)',
+          colour = 'Gender')
+
+p1 + xlab('Height (cm)') + ylab('Weight (kg)')
+
+p1 + ggtitle('A scatterplot of weight on height')
+
+# Changes limits
+p1 + lims(x = c(0, 250),
+          y = c(0, 150))
+p1 + xlim(0, 200)
+
+
+# colours
+p1 + scale_colour_manual(
+  values = c('HoneyDew', 'brown', 'yellow')
+)
+
+# brewer palettes
+p1 + scale_colour_brewer(palette = 'Accent')
+p1 + scale_colour_brewer(palette = 'Dark2')
+p1 + scale_colour_brewer(palette = 'Paired')
+p1 + scale_colour_brewer(palette = 'Set1')
+p1 + scale_colour_brewer(palette = 'Greens')
+p1 + scale_colour_brewer(type = 'seq', palette = 5)
+
+p1 + scale_x_continuous(breaks = c(150, 160, 175, 200))
+p1 + scale_y_continuous(breaks = c(50, 100, 120))
+
+p2 <- ggplot(weight_df, aes(x = gender, y = height)) + geom_boxplot()
+  
+p2 + scale_x_discrete(label = c("Group A", "Group B"))
+
+p1 + theme(legend.position = 'top')
+p1 + theme(legend.position = 'bottom')
+p1 + theme(legend.position = 'none')
+
+p1 + theme(axis.title.x = element_text(size = 20))
+p1 + theme(axis.title.y = element_text(size = 20))
+p1 + theme(axis.title = element_text(size = 20, family = ''))
+
