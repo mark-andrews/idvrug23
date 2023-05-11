@@ -256,6 +256,33 @@ ggplot(ToothGrowth,
                      colour = supp)
 ) + geom_boxplot()
 
+
+
+# barplot versions of grouped boxplot ---------------------------------
+
+# note the use of geom_col not geom_bar
+ggplot(ToothGrowth,
+       mapping = aes(x = dose, y = len, fill = supp) 
+) + geom_col(position = 'dodge')
+
+# add error bars?
+
+# first calculate mean and upper and lower lims
+group_by(ToothGrowth, supp, dose) %>% 
+  summarise(avg = mean(len),
+            upper = mean(len) + sd(len)/sqrt(n()),
+            lower = mean(len) - sd(len)/sqrt(n())
+  ) %>%
+  ggplot(ToothGrowth,
+         mapping = aes(x = factor(dose), 
+                       y = avg, 
+                       fill = supp,
+                       ymin = lower,
+                       ymax = upper)
+  ) + geom_col(position = 'dodge') +
+  geom_errorbar(width=.2,position=position_dodge(.9))
+
+
 # Scatterplot -------------------------------------------------------------
 
 # basic scatterplot
@@ -285,3 +312,82 @@ p1 <- ggplot(weight_df,
 ) + geom_point(size = 0.5, alpha  = 0.75)
 
 ggMarginal(p1)
+
+p2 <- ggplot(weight_df,
+             mapping = aes(x = height, 
+                           y = weight, 
+                           colour = gender)
+) + geom_point(size = 0.5, alpha  = 0.75) +
+  geom_rug(size = 0.1, alpha = 0.25) + 
+  theme_classic() +
+  theme(legend.position = 'bottom')
+
+
+ggMarginal(p2, 
+           type = 'histogram',
+           groupFill = TRUE,
+           groupColour = TRUE,
+           position = 'identity',
+           bins = 50,
+           alpha = 0.5)
+           
+
+# add scatterplot smoother; loess smoother
+ggplot(swiss_df,
+       mapping = aes(x = Examination, y = Fertility)
+) + geom_point() + geom_smooth()
+
+# add scatterplot smoother; lm smoother
+ggplot(swiss_df,
+       mapping = aes(x = Examination, y = Fertility)
+) + geom_point() + geom_smooth(method = 'lm')
+
+
+# add scatterplot smoother; lm smoother, no conf int
+ggplot(swiss_df,
+       mapping = aes(x = Examination, y = Fertility)
+) + geom_point() + geom_smooth(method = 'lm', se = FALSE)
+
+
+# using a larger data set
+ggplot(weight_df,
+       mapping = aes(x = height, y = weight)
+) + geom_point() + geom_smooth(method = 'gam')
+
+# using colours for gender
+ggplot(weight_df,
+       mapping = aes(x = height, y = weight, colour = gender)
+) + geom_point(size = 0.1, alpha = 0.25) + 
+  geom_smooth(method = 'lm', fullrange = TRUE)
+
+# labelling the points in the scatterplot
+
+ggplot(swiss_df,
+       mapping = aes(x = Examination, 
+                     y = Fertility, 
+                     label = province)
+) + geom_text()
+
+# using ggrepel
+library(ggrepel)
+
+ggplot(swiss_df,
+       mapping = aes(x = Examination, 
+                     y = Fertility, 
+                     label = province)
+) + geom_text_repel()
+
+ggplot(swiss_df,
+       mapping = aes(x = Examination, 
+                     y = Fertility, 
+                     label = province)
+) + geom_label_repel()
+
+ggplot(swiss_df,
+       mapping = aes(x = Examination, 
+                     y = Fertility, 
+                     colour = is_catholic,
+                     label = province)
+) + geom_label_repel()
+
+
