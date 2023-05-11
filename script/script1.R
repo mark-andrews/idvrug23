@@ -99,6 +99,12 @@ ggplot(weight_df,
        mapping = aes(x = height)
 ) + geom_histogram(colour = 'white', bins = 50)
 
+# plus a rug 
+ggplot(weight_df,
+       mapping = aes(x = height)
+) + geom_histogram(colour = 'white', bins = 50) +
+  geom_rug(size = 0.1, alpha = 0.25)
+
 # histogram with binwidth 2.5, and separate histogram
 # for Male and Female
 # Stacked histogram: the default
@@ -249,3 +255,33 @@ ggplot(ToothGrowth,
                      group = interaction(dose,supp), 
                      colour = supp)
 ) + geom_boxplot()
+
+# Scatterplot -------------------------------------------------------------
+
+# basic scatterplot
+ggplot(weight_df,
+       mapping = aes(x = height, y = weight)
+) + geom_point(size = 0.5, alpha  = 0.75)
+
+# scatterplot with colour coding
+ggplot(weight_df,
+       mapping = aes(x = height, y = weight, colour = gender)
+) + geom_point(size = 0.5, alpha  = 0.75)
+
+# scatterplot with colour coding
+# and a rug plot
+ggplot(weight_df,
+       mapping = aes(x = height, y = weight, colour = gender)
+) + geom_point(size = 0.5, alpha  = 0.75) +
+  geom_rug(size = 0.1, alpha = 0.5)
+
+# marginal plots on scatterplots
+library(ggExtra)
+
+p1 <- ggplot(weight_df,
+             mapping = aes(x = height, 
+                           y = weight, 
+                           colour = gender)
+) + geom_point(size = 0.5, alpha  = 0.75)
+
+ggMarginal(p1)
